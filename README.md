@@ -625,13 +625,12 @@ g++ tuple.cpp -o tuple
 
 | Resource | Link |
 |---|---|
-| Official C++ Documentation https://cppreference.com|
+| Official C++ Documentation | https://cppreference.com|
 | GCC Compiler Docs | https://gcc.gnu.org/onlinedocs/ |
-| Learn C++ (Beginner Friendly) https://www.w3schools.com/CPP/default.asp|
-| C++ Tutorial — GeeksforGeeks https://www.geeksforgeeks.org/c-plus-plus/|
-| Stack Overflow — C++ Tag https://stackoverflow.com/questions/20616961 usr-bin-ld-cannot-find-no-such-file-or-directory|
-| C++ real world use
-https://www.geeksforgeeks.org/blogs/top-applications-of-cpp-in-real-world/|
+| Learn C++ (Beginner Friendly) | https://www.w3schools.com/CPP/default.asp|
+| C++ Tutorial — GeeksforGeeks | https://www.geeksforgeeks.org/c-plus-plus/|
+| Stack Overflow — C++ Tag | https://stackoverflow.com/questions/20616961 usr-bin-ld-cannot-find-no-such-file-or-directory|
+| C++ real world use | https://www.geeksforgeeks.org/blogs/top-applications-of-cpp-in-real-world/|
 ---
 
 *Built on Ubuntu/Debian Linux with VS Code. All examples compiled with g++ (GCC). Part of the AI Systems Toolkit series.*
