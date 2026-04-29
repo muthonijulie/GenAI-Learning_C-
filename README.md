@@ -632,5 +632,3 @@ g++ tuple.cpp -o tuple
 | Stack Overflow — C++ Tag | https://stackoverflow.com/questions/20616961 usr-bin-ld-cannot-find-no-such-file-or-directory|
 | C++ real world use | https://www.geeksforgeeks.org/blogs/top-applications-of-cpp-in-real-world/|
 ---
-
-*Built on Ubuntu/Debian Linux with VS Code. All examples compiled with g++ (GCC). Part of the AI Systems Toolkit series.*
