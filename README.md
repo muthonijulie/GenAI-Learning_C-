@@ -59,7 +59,7 @@ g++ --version
 
 Expected output:
 ```
-g++ (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0 
 ```
 
 ### Step 3 — Install CMake
@@ -90,7 +90,7 @@ Or search manually in VS Code:
 ### Step 5 — Verify Everything Works
 
 ```bash
-mkdir ~/cpp-test && cd ~/cpp-test
+mkdir cpp-tes && cd cpp-test
 touch main.cpp
 code .
 ```
@@ -99,9 +99,8 @@ Paste into `main.cpp`:
 
 ```cpp
 #include <iostream>
-
-int main() {
-    std::cout << "C++ environment is ready!" << std::endl;
+int main(){
+    std::cout <<"Hello world! C++ environment is ready."<< std::endl;
     return 0;
 }
 ```
@@ -115,7 +114,7 @@ g++ main.cpp -o main
 
 Expected output:
 ```
-C++ environment is ready!
+Hello world! C++ environment is ready.
 ```
 
 ---
@@ -125,7 +124,7 @@ C++ environment is ready!
 **What it does:** Simulates a single neuron — the basic unit of a neural network. It takes inputs, multiplies each by a weight, sums them, and passes the result through a ReLU activation function. This is exactly what PyTorch and TensorFlow do at their C++ core.
 
 ```bash
-mkdir ~/cpp-ai-intro && cd ~/cpp-ai-intro
+mkdir intro && cd intro
 touch neuron.cpp
 code .
 ```
@@ -135,29 +134,29 @@ code .
 #include <vector>
 #include <numeric>
 
-// ReLU activation function
-double relu(double value) {
-    return value > 0 ? value : 0;
+double relu(double value){
+    return value>0?value:0;//returns 0 if value equals 0 or negative and value if greater than 0
 }
-
-// Single neuron: weighted sum + bias + activation
+//in this case focus is on neuron which consist of input, output and weights
 double neuron(const std::vector<double>& inputs,
-              const std::vector<double>& weights,
-              double bias) {
-    double weightedSum = std::inner_product(
-        inputs.begin(), inputs.end(), weights.begin(), 0.0
-    );
-    return relu(weightedSum + bias);
+//calculate the weighted sum
+const std:: vector<double>& weights,
+double bias){
+    double weightedSum=std::inner_product(
+        inputs.begin(),inputs.end(),weights.begin(),0.0);
+    //add bias
+    weightedSum+=bias;
+    //Apply RELU to the weighted sum
+    return relu(weightedSum);
+
 }
-
-int main() {
-    std::vector<double> inputs  = {0.5, 0.3, 0.9};
-    std::vector<double> weights = {0.4, 0.7, 0.2};
-    double bias = 0.1;
-
-    double output = neuron(inputs, weights, bias);
-    std::cout << "Neuron Output: " << output << std::endl;
-
+int main(){
+    //examples
+    std::vector<double> inputs={0.5,0.3,0.9};
+    std::vector<double> weights={0.2,0.4,0.6};
+    double bias=0.1;
+    double output=neuron(inputs,weights,bias);
+    std::cout<<"Output of the neuron: "<<output<<std::endl;
     return 0;
 }
 ```
@@ -169,14 +168,14 @@ g++ neuron.cpp -o neuron
 
 Expected output:
 ```
-Neuron Output: 0.63
+Neuron Output: 0.86
 ```
 
 ---
 
 ## Learning Stages
 
-All files go inside `~/cpp-ai-intro/`. Compile each with:
+All files go inside `intro/`. Compile each with:
 ```bash
 g++ <filename>.cpp -o <filename>
 ./<filename>
@@ -187,28 +186,38 @@ g++ <filename>.cpp -o <filename>
 ### Stage 1 – Variables, Data Types & I/O
 
 ```cpp
-// stage1.cpp
+// data.cpp
+#include <iostream>
+#include <string>
+int main(){
+    int age=22;
+    double weight=80;
+    bool isStudent=true;
+    std::string name="Lizzy-Backend dev";
+    std::cout<<"Name: "<<name<<std::endl;
+    std::cout<<"Age: "<<age<<std::endl;
+    std::cout<<"Weight: "<<weight<<std::endl;
+    std::cout<<"Is student: "<<std::boolalpha<<isStudent<<std::endl;
+    return 0;
+
+
+}
+```
+```cpp
+//input.cpp
 #include <iostream>
 #include <string>
 
-int main() {
-    int age           = 25;
-    double weight     = 72.5;
-    bool isActive     = true;
-    char grade        = 'A';
-    std::string name  = "Backend Dev";
-
-    std::cout << "Name: "   << name     << std::endl;
-    std::cout << "Age: "    << age      << std::endl;
-    std::cout << "Weight: " << weight   << std::endl;
-    std::cout << "Active: " << isActive << std::endl;
-    std::cout << "Grade: "  << grade    << std::endl;
-
+int main(){
+    std::string name;
+    std::cout<<"ENTER YOUR NAME: ";
+    std::cin>>name;
+    std::cout<<"Hello, "<<name<<"! Welcome to C++ programming."<<std::endl;
     return 0;
 }
 ```
 
-> **Backend relevance:** These types map directly to what you store in a database — integers for IDs, doubles for prices or model scores, strings for names and tokens.
+> **Backend relevance:** These types map directly to what you store in a database — integers for age, doubles for weight, strings for names.
 
 ---
 
@@ -217,20 +226,24 @@ int main() {
 **If / Else — Model deployment check:**
 
 ```cpp
-// stage2_if.cpp
+// if.cpp
 #include <iostream>
 
-int main() {
-    double modelAccuracy = 87.5;
-
-    if (modelAccuracy >= 90.0) {
-        std::cout << "Model is production ready!" << std::endl;
-    } else if (modelAccuracy >= 75.0) {
-        std::cout << "Model needs more training." << std::endl;
-    } else {
-        std::cout << "Model is underperforming. Check your data." << std::endl;
+int main(){
+    double accuracy=90;//simulating model accuracy
+    //Evaluate model performance based on accuracy
+    if(accuracy>=90){
+        std::cout<<"Excellent performance"<<std::endl;
     }
-
+    else if(accuracy>=75){
+        std::cout<<"Good performance"<<std::endl;
+    }
+    else if(accuracy>=60){
+        std::cout<<"Average performance"<<std::endl;
+    }
+    else{
+        std::cout<<"Needs improvement"<<std::endl;
+    }
     return 0;
 }
 ```
@@ -238,13 +251,16 @@ int main() {
 **For Loop — Batch inference pipeline:**
 
 ```cpp
-// stage2_loop.cpp
+// for.cpp
 #include <iostream>
 #include <vector>
 
 int main() {
+    // Simulating a batch of AI model confidence scores
     std::vector<double> confidenceScores = {0.95, 0.42, 0.88, 0.31, 0.76};
 
+    std::cout << "Processing batch predictions..." << std::endl;
+// Using a for loop to evaluate each confidence score
     for (int i = 0; i < confidenceScores.size(); i++) {
         if (confidenceScores[i] >= 0.75) {
             std::cout << "Sample " << i + 1 << ": ACCEPTED (score: "
@@ -262,20 +278,20 @@ int main() {
 **While Loop — Training epochs:**
 
 ```cpp
-// stage2_while.cpp
+// while.cpp
 #include <iostream>
 
-int main() {
-    int epoch    = 1;
-    double loss  = 1.0;
-
-    while (loss > 0.2) {
-        loss -= 0.15;
-        std::cout << "Epoch " << epoch << " | Loss: " << loss << std::endl;
+int main(){
+    int epoch=5;
+    double loss=1;
+    //keep training until loss is low
+    while (loss>0.2){
+        loss-=0.15; //simulating loss reduction
+        std::cout<<"Epoch"<<epoch
+        <<"|Loss:"<<loss<<std::endl;
         epoch++;
     }
-
-    std::cout << "Training complete!" << std::endl;
+    std::cout<<"Training done."<<std::endl;
     return 0;
 }
 ```
@@ -283,12 +299,14 @@ int main() {
 **Switch — Backend status handler:**
 
 ```cpp
-// stage2_switch.cpp
+// switch.cpp
 #include <iostream>
+#include <string>
 
 int main() {
     int statusCode = 2;
 
+    // Simulating a backend API response handler
     switch (statusCode) {
         case 1:
             std::cout << "Status: Model training in progress..." << std::endl;
@@ -314,66 +332,32 @@ int main() {
 **Pass by Value vs Pass by Reference:**
 
 ```cpp
-// stage3_ref.cpp
+// pass by reference and pass by value
 #include <iostream>
-
-// Pass by VALUE - original unchanged
-void doubleByValue(double score) {
-    score = score * 2;
-    std::cout << "Inside function: " << score << std::endl;
-}
-
-// Pass by REFERENCE - modifies original directly
-void doubleByReference(double& score) {
-    score = score * 2;
-    std::cout << "Inside function: " << score << std::endl;
-}
-
-int main() {
-    double score = 0.5;
-
-    std::cout << "--- Pass by Value ---" << std::endl;
+ //pass by value
+ void doubleByValue(double score){
+    score*=2;
+    std::cout<<"Inside function:"<<score<<std::endl;
+  
+ }
+ //pass by reference
+ void doubleByReference(double& score){
+    score*=2;
+    std::cout<<"Inside function:"<<score<<std::endl;
+ }
+    int main(){
+    double score=0.3;
+    std::cout<<"Pass by value:"<<std::endl;
     doubleByValue(score);
-    std::cout << "After function: " << score << std::endl;
-
-    std::cout << "\n--- Pass by Reference ---" << std::endl;
+    std::cout<<"Apres function:"<<score<<std::endl;
+    std::cout<<"\nPass by reference.."<<std::endl;
     doubleByReference(score);
-    std::cout << "After function: " << score << std::endl;
-
+    std::cout<<"Apres function:"<<score<<std::endl;
     return 0;
-}
+ }
 ```
 
 > **AI relevance:** Large tensors and matrices are always passed by reference to avoid expensive copying. This is how TensorFlow passes data between operations internally.
-
-**Mini Inference Function:**
-
-```cpp
-// stage3_inference.cpp
-#include <iostream>
-#include <vector>
-#include <numeric>
-
-double relu(double value) { return value > 0 ? value : 0; }
-
-double runInference(const std::vector<double>& inputs,
-                    const std::vector<double>& weights,
-                    double bias) {
-    double weightedSum = std::inner_product(
-        inputs.begin(), inputs.end(), weights.begin(), 0.0
-    );
-    return relu(weightedSum + bias);
-}
-
-int main() {
-    std::vector<double> inputs  = {0.5, 0.3, 0.9};
-    std::vector<double> weights = {0.4, 0.7, 0.2};
-    double bias = 0.1;
-
-    std::cout << "Inference result: " << runInference(inputs, weights, bias) << std::endl;
-    return 0;
-}
-```
 
 ---
 
@@ -389,19 +373,20 @@ int main() {
 **Raw Pointers:**
 
 ```cpp
-// stage4_pointers.cpp
+// pointers.cpp
 #include <iostream>
-
-int main() {
-    double modelScore = 0.92;
-    double* ptr = &modelScore;   // pointer holds the address
-
-    std::cout << "Value: "        << modelScore << std::endl;
-    std::cout << "Dereferenced: " << *ptr       << std::endl;
-
-    *ptr = 0.95;   // modify through pointer
-    std::cout << "Updated: "      << modelScore << std::endl;
-
+int main(){
+    double model=0.95;
+    //& means get the address
+    //* means pointer
+    double* modelPtr=&model;//pointer to model variable
+    std::cout<<"Value:"<<model<<std::endl;
+    std::cout<<"Address:"<<&model<<std::endl;
+    std::cout<<"Pointer holds:"<<modelPtr<<std::endl;
+    std::cout<<"Dereferenced:"<<*modelPtr<<std::endl;
+    //modifying value through pointer
+    *modelPtr=0.75;
+    std::cout<<"Apres modification:"<<model<<std::endl;
     return 0;
 }
 ```
@@ -409,44 +394,31 @@ int main() {
 **Heap Allocation:**
 
 ```cpp
-// stage4_heap.cpp
+// heap.cpp
 #include <iostream>
+//heap is manually managed memory, you have to allocate and deallocate memory yourself using new and delete keywords. It is used for dynamic memory allocation when the size of data is not known at compile time or when you want to create objects that outlive the scope of a function.
 
-int main() {
-    double* weights = new double[5];
 
-    weights[0] = 0.12; weights[1] = 0.45; weights[2] = 0.78;
-    weights[3] = 0.33; weights[4] = 0.91;
+int main(){
+    //allocating memory on heap manually
+    double* weights=new double[6];
+    //assigning values
+    weights[0]=0.15;
+    weights[1]=0.28;
+    weights[2]=0.39;
+    weights[3]=0.41;
+    weights[4]=0.50;
+    weights[5]=0.65;
 
-    for (int i = 0; i < 5; i++) {
-        std::cout << "w" << i + 1 << ": " << weights[i] << std::endl;
-    }
+    std::cout<<"Model weights:"<<std::endl;
+    for (int i=0;i<6;i++){
+        std::cout<<"weights:"<<i+1<<":"<<weights[i]<<std::endl;
 
-    delete[] weights;   // Always free heap memory
-    std::cout << "Memory freed." << std::endl;
-    return 0;
+
 }
-```
-
-**Smart Pointers (Modern C++):**
-
-```cpp
-// stage4_smartptr.cpp
-#include <iostream>
-#include <memory>
-
-int main() {
-    std::unique_ptr<double[]> weights(new double[5]);
-
-    weights[0] = 0.12; weights[1] = 0.45; weights[2] = 0.78;
-    weights[3] = 0.33; weights[4] = 0.91;
-
-    for (int i = 0; i < 5; i++) {
-        std::cout << "w" << i + 1 << ": " << weights[i] << std::endl;
-    }
-
-    // Memory freed automatically - no delete needed
-    return 0;
+delete[] weights;// in heap, memory should be freed when done.
+std::cout<<"Memory freed!!"<<std::endl;
+return 0;
 }
 ```
 
@@ -459,37 +431,49 @@ int main() {
 **Basic Class — Neuron:**
 
 ```cpp
-// stage5_class.cpp
+// class.cpp
 #include <iostream>
 #include <vector>
 #include <numeric>
 
-class Neuron {
-private:
-    std::vector<double> weights;
+class Neuron{
+    private:
+    //this is ony accessible inside the class
+    std::vector<double>weights;
     double bias;
 
-public:
-    Neuron(std::vector<double> w, double b) : weights(w), bias(b) {
-        std::cout << "Neuron created with " << weights.size() << " inputs." << std::endl;
+    public://accessible everywhere
+    //this is a constructor that runs when an object is created
+    Neuron(std::vector<double>w,double b):weights(w),bias(b){
+        std::cout<<"Neuron created with"<<weights.size()<<"inputs."<<std::endl;
     }
+    //this is a destructor that runs when an object is destroyed
+    ~Neuron(){
+        std::cout<<"Neuron destroyed."<<std::endl;
+    }
+    double relu(double value){//activation function
+        return value>0?value:0;
 
-    ~Neuron() { std::cout << "Neuron destroyed." << std::endl; }
-
-    double relu(double value) { return value > 0 ? value : 0; }
-
-    double forward(const std::vector<double>& inputs) {
-        double weightedSum = std::inner_product(
-            inputs.begin(), inputs.end(), weights.begin(), 0.0
+    }
+    //forward pass
+    double forward(const std::vector<double>& inputs){
+        double weightedSum=std::inner_product(
+            inputs.begin(),inputs.end(),weights.begin(),0.0
         );
-        return relu(weightedSum + bias);
+        return relu(weightedSum+bias);
+        
+    }
+    std::vector<double> getWeights(){
+        return weights;
     }
 };
-
-int main() {
-    Neuron neuron({0.4, 0.7, 0.2}, 0.1);
-    std::vector<double> inputs = {0.5, 0.3, 0.9};
-    std::cout << "Neuron output: " << neuron.forward(inputs) << std::endl;
+int main(){
+    //create a neuron object
+    Neuron neuron({0.2,0.4,0.6},0.1);
+    //forward pass with some inputs
+    std::vector<double>inputs={0.5,0.3,0.9};
+    double output=neuron.forward(inputs);
+    std::cout<<"Outputs:"<<output<<std::endl;
     return 0;
 }
 ```
@@ -497,44 +481,63 @@ int main() {
 **Inheritance — Layer architecture (like PyTorch's `nn.Module`):**
 
 ```cpp
-// stage5_inheritance.cpp
+// inheritance.cpp
 #include <iostream>
 #include <vector>
 #include <numeric>
 #include <cmath>
 
+// BASE CLASS - defines the interface every layer must have
 class Layer {
 protected:
     std::string layerName;
+
 public:
     Layer(std::string name) : layerName(name) {
         std::cout << layerName << " layer initialized." << std::endl;
     }
-    virtual double forward(const std::vector<double>& inputs,
-                           const std::vector<double>& weights,
-                           double bias) = 0;
-    virtual ~Layer() { std::cout << layerName << " layer destroyed." << std::endl; }
-};
 
-class ReLULayer : public Layer {
-public:
-    ReLULayer() : Layer("ReLU") {}
-    double forward(const std::vector<double>& inputs,
-                   const std::vector<double>& weights,
-                   double bias) override {
-        double sum = std::inner_product(inputs.begin(), inputs.end(), weights.begin(), 0.0) + bias;
-        return sum > 0 ? sum : 0;
+    // Virtual - allows child classes to override this method
+    virtual double forward(const std::vector<double>& inputs,
+                          const std::vector<double>& weights,
+                          double bias) = 0; // = 0 means must be implemented
+
+    virtual ~Layer() {
+        std::cout << layerName << " layer destroyed." << std::endl;
     }
 };
 
+// CHILD CLASS 1 - ReLU activation layer
+class ReLULayer : public Layer {
+public:
+    ReLULayer() : Layer("ReLU") {}
+
+    double forward(const std::vector<double>& inputs,
+                  const std::vector<double>& weights,
+                  double bias) override {
+        double weightedSum = std::inner_product(
+            inputs.begin(), inputs.end(), weights.begin(), 0.0
+        );
+        double result = weightedSum + bias;
+        // ReLU - returns 0 if negative
+        return result > 0 ? result : 0;
+    }
+};
+
+// CHILD CLASS 2 - Sigmoid activation layer
 class SigmoidLayer : public Layer {
 public:
     SigmoidLayer() : Layer("Sigmoid") {}
+
     double forward(const std::vector<double>& inputs,
-                   const std::vector<double>& weights,
-                   double bias) override {
-        double sum = std::inner_product(inputs.begin(), inputs.end(), weights.begin(), 0.0) + bias;
-        return 1.0 / (1.0 + std::exp(-sum));
+                  const std::vector<double>& weights,
+                  double bias) override {
+        double weightedSum = std::inner_product(
+            inputs.begin(), inputs.end(), weights.begin(), 0.0
+        );
+        double result = weightedSum + bias;
+        // Sigmoid - squashes output between 0 and 1
+        return 1.0 / (1.0 + std::exp(-result));
     }
 };
 
@@ -543,11 +546,16 @@ int main() {
     std::vector<double> weights = {0.4, 0.7, 0.2};
     double bias = 0.1;
 
+    // Both layers share the same interface
+    // but behave differently internally
     ReLULayer relu;
     SigmoidLayer sigmoid;
 
-    std::cout << "\nReLU output:    " << relu.forward(inputs, weights, bias)    << std::endl;
-    std::cout << "Sigmoid output: " << sigmoid.forward(inputs, weights, bias)  << std::endl;
+    std::cout << "\nReLU output:    "
+              << relu.forward(inputs, weights, bias) << std::endl;
+    std::cout << "Sigmoid output: "
+              << sigmoid.forward(inputs, weights, bias) << std::endl;
+
     return 0;
 }
 ```
@@ -559,50 +567,54 @@ int main() {
 ### Stage 6 – The Standard Template Library (STL)
 
 ```cpp
-// stage6_stl.cpp
+// tuple.cpp
 #include <iostream>
 #include <vector>
-#include <map>
 #include <tuple>
-#include <algorithm>
-#include <string>
 
 int main() {
-    // --- VECTOR ---
-    std::vector<double> losses = {0.9, 0.75, 0.6, 0.45, 0.2};
-    losses.push_back(0.1);
-    auto minLoss = std::min_element(losses.begin(), losses.end());
-    std::cout << "Best loss: " << *minLoss << std::endl;
-
-    // --- MAP ---
-    std::map<std::string, double> metrics;
-    metrics["accuracy"] = 0.94;
-    metrics["loss"]     = 0.12;
-    metrics["f1_score"] = 0.91;
-
-    for (auto& pair : metrics) {
-        std::cout << pair.first << ": " << pair.second << std::endl;
-    }
-
-    // --- TUPLE ---
+    // Store epoch, loss, accuracy together
     std::vector<std::tuple<int, double, double>> trainingLog;
+
     trainingLog.push_back({1, 0.85, 0.72});
     trainingLog.push_back({2, 0.61, 0.84});
     trainingLog.push_back({3, 0.34, 0.93});
 
     for (auto& record : trainingLog) {
-        std::cout << "Epoch: "   << std::get<0>(record)
-                  << " | Loss: " << std::get<1>(record)
-                  << " | Acc: "  << std::get<2>(record) << std::endl;
+        std::cout << "Epoch: "    << std::get<0>(record)
+                  << " | Loss: "  << std::get<1>(record)
+                  << " | Acc: "   << std::get<2>(record) << std::endl;
+    }
+
+    return 0;
+}
+```
+```cpp
+//map.cpp
+#include <iostream>
+#include <map>
+#include <string>
+
+int main() {
+    // Store model metrics by name
+    std::map<std::string, double> metrics;
+
+    metrics["accuracy"] = 0.94;
+    metrics["loss"]      = 0.12;
+    metrics["f1_score"]  = 0.91;
+
+    for (auto& pair : metrics) {
+        std::cout << pair.first << ": " << pair.second << std::endl;
     }
 
     return 0;
 }
 ```
 
+
 ```bash
-g++ stage6_stl.cpp -o stage6_stl
-./stage6_stl
+g++ tuple.cpp -o tuple
+./tuple
 ```
 
 > **Backend relevance:** Vectors store layer outputs and gradients internally in PyTorch. Maps are used for model registries and config management. Tuples are great for returning multiple values from functions — very common in AI pipelines.
@@ -613,14 +625,13 @@ g++ stage6_stl.cpp -o stage6_stl
 
 | Resource | Link |
 |---|---|
-| Official C++ Documentation | https://cppreference.com |
+| Official C++ Documentation https://cppreference.com|
 | GCC Compiler Docs | https://gcc.gnu.org/onlinedocs/ |
-| C++ Tutorial (GeeksforGeeks) | https://www.geeksforgeeks.org/c-plus-plus/ |
-| LibTorch (C++ frontend for PyTorch) | https://pytorch.org/cppdocs/ |
-| TensorFlow C++ API | https://www.tensorflow.org/api_docs/cc |
-| VS Code C++ Setup Guide | https://code.visualstudio.com/docs/languages/cpp |
-| Learn C++ (learncpp.com) | https://www.learncpp.com |
-
+| Learn C++ (Beginner Friendly) https://www.w3schools.com/CPP/default.asp|
+| C++ Tutorial — GeeksforGeeks https://www.geeksforgeeks.org/c-plus-plus/|
+| Stack Overflow — C++ Tag https://stackoverflow.com/questions/20616961 usr-bin-ld-cannot-find-no-such-file-or-directory|
+| C++ real world use
+https://www.geeksforgeeks.org/blogs/top-applications-of-cpp-in-real-world/|
 ---
 
 *Built on Ubuntu/Debian Linux with VS Code. All examples compiled with g++ (GCC). Part of the AI Systems Toolkit series.*
